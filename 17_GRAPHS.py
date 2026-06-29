@@ -164,38 +164,3 @@ if __name__ == "__main__":
         print(node, end='  ')
 
 
-#DFS Traversal
-from collections import defaultdict
-
-def dfsRec(adj, visited , s , res):
-    visited[s] = True
-    res.append(s)
-
-    for i in adj[s]:
-        if not visited[i]:
-            dfsRec(adj,visited, i ,res)
-        
-def dfs(adj):
-    visited=[False]*len(adj)
-    res = []
-    for i in range(len(adj)):
-        if not visited[i]:
-            dfsRec(adj, visited ,i , res)
-    return res
-
-def addEdge(adj , u, v):
-    adj[u].append(v)
-    adj[v].append(u)
-
-if __name__=='__main__':
-    v = 6
-    adj = []
-    for i in range(v):
-        adj.append([])
-    addEdge(adj , 1, 2)
-    addEdge(adj , 2, 4)
-    addEdge(adj , 0, 3)
-    addEdge(adj , 5, 4)  
-
-    res = dfs(adj)
-    print(*res)

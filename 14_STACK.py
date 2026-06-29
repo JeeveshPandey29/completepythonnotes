@@ -51,10 +51,85 @@ class Solution:
                     return False
 
         return len(stack) == 0
+
+# min stack 
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+        self.minstack = []
+
+    def push(self, value: int) -> None:
+        self.stack.append(value)
+        if len(self.minstack) == 0:
+            self.minstack.append(value)
+        elif value <= self.minstack[-1]:
+            self.minstack.append(value)
+
+    def pop(self) -> None:
+        if self.stack[-1] == self.minstack[-1]:
+            self.minstack.pop()
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+        
+
+    def getMin(self) -> int:
+        return self.minstack[-1]
     
+
 # MONOTONIC STACK
 while stack and stack[-1] <= arr[i]:
     stack.pop()
+
+#implement stack using queues
+class MyStack:
+
+    def __init__(self):
+        self.q1 = deque()
+        self.q2 = deque()
+
+    def push(self, x: int) -> None:
+        self.q2.append(x)
+        while self.q1:
+            self.q2.append(self.q1.popleft())
+        self.q1, self.q2 = self.q2, self.q1
+
+    def pop(self) -> int:
+        return self.q1.popleft()
+
+    def top(self) -> int:
+        return self.q1[0]
+
+    def empty(self) -> bool:
+        return len(self.q1) == 0
+
+#implement queue using stack
+class MyQueue:
+
+    def __init__(self):
+        self.inStack = []
+        self.outStack = []
+
+    def push(self, x: int) -> None:
+        self.inStack.append(x)
+
+    def pop(self) -> int:
+        self.peek()  # ensure outStack has elements
+        return self.outStack.pop()
+
+    def peek(self) -> int:
+        if not self.outStack:
+            while self.inStack:
+                self.outStack.append(self.inStack.pop())
+        return self.outStack[-1]
+
+    def empty(self) -> bool:
+        return not self.inStack and not self.outStack
+
+
+
 
 # STACK USING LINKED LIST
 class Node:
@@ -99,23 +174,15 @@ NEXT GREATER ELEMENT
 '''
 class Solution:
     def nextGreaterElement(self, nums1, nums2):
-
         result = []
-
         for num in nums1:
-
             greater = -1
-
             pos = nums2.index(num)
-
             for i in range(pos + 1, len(nums2)):
-
                 if nums2[i] > num:
                     greater = nums2[i]
                     break
-
             result.append(greater)
-
         return result
     
 # Q3. Next greater element 2: in this cicular array or linked list is given 
@@ -124,23 +191,15 @@ class Solution:
 
 class Solution:
     def nextGreaterElements(self, nums):
-
         n = len(nums)
         ans = []
-
         for i in range(n):
-
             greater = -1
-
             for j in range(1, n):
-
                 idx = (i + j) % n
-
                 if nums[idx] > nums[i]:
                     greater = nums[idx]
                     break
-
             ans.append(greater)
-
         return ans
     
